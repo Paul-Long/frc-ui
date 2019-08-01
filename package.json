@@ -1,6 +1,6 @@
 {
   "name": "frc-ui",
-  "version": "0.0.0-beta.0",
+  "version": "0.0.0-beta.2",
   "description": "React Web UI",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -38,6 +38,7 @@
     "@types/classnames": "^2.2.7",
     "@types/react": "^16.8.3",
     "@types/react-dom": "^16.8.1",
+    "antd": "^3.19.8",
     "chalk": "^2.4.2",
     "classnames": "^2.2.6",
     "gulp": "^3.9.1",

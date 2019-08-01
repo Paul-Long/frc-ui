@@ -1,2 +1,39 @@
+.swc-tabs-wrapper {
+  display: inline-block;
+
+  & > label {
+    color: #8F9598;
+    letter-spacing: 0;
+    margin-right: 4px;
+  }
+}
 .swc-tabs {
+  .ant-radio-button-wrapper, .ant-radio-button-wrapper-checked {
+    border: none;
+    transition: none;
+    background: #172422;
+    color: #FFEBC8;
+    box-shadow: none;
+    text-align: center;
+    &:hover {
+      background: #193D37;
+      color: #FFEBC8;
+    }
+  }
+  .ant-radio-button-wrapper:not(:first-child) {
+    margin-left: 1px;
+    &:before {
+      display: none;
+      background: transparent;
+    }
+  }
+  &-checked {
+    background: #FF9300;
+    color: #1E1E1E;
+    &:hover {
+      background: #FF9300;
+      color: #1E1E1E;
+    }
+    box-shadow: none;
+  }
 }

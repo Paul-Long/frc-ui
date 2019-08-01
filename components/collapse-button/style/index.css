@@ -1,0 +1,57 @@
+.swc-collapse-button {
+  background: #136c5e;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.swc-collapse-button-arrow {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+.swc-collapse-button-bottom {
+  width: 100px;
+  height: 8px;
+  border-radius: 2px 2px 0 0;
+}
+.swc-collapse-button-bottom .swc-collapse-button-arrow {
+  left: 50%;
+  bottom: 50%;
+  margin-left: -4px;
+  margin-bottom: -5px;
+}
+.swc-collapse-button-right {
+  width: 8px;
+  height: 100px;
+  border-radius: 2px 0 0 2px;
+}
+.swc-collapse-button-right .swc-collapse-button-arrow {
+  right: 50%;
+  top: 50%;
+  margin-right: -5px;
+  margin-top: -4px;
+}
+.swc-collapse-button-top {
+  width: 100px;
+  height: 8px;
+  border-radius: 0 0 2px 2px;
+}
+.swc-collapse-button-top .swc-collapse-button-arrow {
+  left: 50%;
+  top: 50%;
+  margin-left: -4px;
+  margin-top: -5px;
+}
+.swc-collapse-button-left {
+  width: 8px;
+  height: 100px;
+  border-radius: 0 2px 2px 0;
+}
+.swc-collapse-button-left .swc-collapse-button-arrow {
+  top: 50%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -4px;
+}
