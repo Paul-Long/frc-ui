@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import {Radio} from 'antd';
-import {RadioChangeEvent} from 'antd/es/radio'
+import Radio, {RadioChangeEvent} from 'antd/es/radio'
 
 const {Group, Button} = Radio;
 type OptionProps = {label: string, value: string | number, disabled?: boolean, color?: string, background?: string, width?: number};
