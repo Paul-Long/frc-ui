@@ -2,22 +2,23 @@
   display: inline-block;
 
   & > label {
-    color: #8F9598;
+    color: #8f9598;
     letter-spacing: 0;
     margin-right: 4px;
   }
 }
 .swc-tabs {
-  .ant-radio-button-wrapper, .ant-radio-button-wrapper-checked {
+  .ant-radio-button-wrapper,
+  .ant-radio-button-wrapper-checked {
     border: none;
     transition: none;
     background: #172422;
-    color: #FFEBC8;
+    color: #ffebc8;
     box-shadow: none;
     text-align: center;
     &:hover {
-      background: #193D37;
-      color: #FFEBC8;
+      background: #193d37;
+      color: #ffebc8;
     }
   }
   .ant-radio-button-wrapper:not(:first-child) {
@@ -28,12 +29,18 @@
     }
   }
   &-checked {
-    background: #FF9300;
-    color: #1E1E1E;
+    background: #ff9300;
+    color: #1e1e1e;
     &:hover {
-      background: #FF9300;
-      color: #1E1E1E;
+      background: #ff9300;
+      color: #1e1e1e;
     }
     box-shadow: none;
+  }
+  &-disabled {
+    color: #ffebc8;
+    &:hover {
+      color: #7b8280;
+    }
   }
 }

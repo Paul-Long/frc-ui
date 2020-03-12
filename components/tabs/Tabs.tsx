@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Radio, {RadioChangeEvent} from 'antd/es/radio'
 
 const {Group, Button} = Radio;
-type OptionProps = {label: string, value: string | number, disabled?: boolean, color?: string, background?: string, width?: number};
+type OptionProps = {label: string, value: string | number, disabled?: boolean, color?: string, background?: string, width?: number, render?: Function};
 interface TabsProps {
   className?: string,
   onChange?: Function,
@@ -48,6 +48,9 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
     const {multi, onChange, options, showAll} = this.props;
     let stateValue  = this.state.value;
     let value = ev.target.value;
+    if (value === undefined) return;
+    const disabled = options.some(o => o.value === value && o.disabled === true);
+    if (disabled) return;
     if (multi) {
       if (value === 'all') {
         value = ['all'];
@@ -102,8 +105,17 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
       (checked && o.background) && (style.background = o.background);
       (checked && o.color) && (style.color = o.color);
       const cls = classNames({
-        ['swc-tabs-checked']: checked
+        ['swc-tabs-checked']: checked,
+        ['swc-tabs-disabled']: o.disabled
       });
+      if (typeof o.render === 'function') {
+        const props: any = {
+          style,
+          className: cls,
+          children: o.label
+        };
+        return o.render(Button, props);
+      }
       return <Button key={o.value} style={style} value={o.value} className={cls} checked={false}>{o.label}</Button>
     });
   };

@@ -7,6 +7,6 @@ interface IconProps {
 }
 export default function (props: IconProps) {
   const {type, className, ...other} = props;
-  const cls = classNames('swc-icon', `icon-${type}`, className);
+  const cls = classNames('swc-icon sumscope-icon', `icon-${type}`, className);
   return <i {...other} className={cls} {...other} />;
 }
