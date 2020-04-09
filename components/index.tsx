@@ -5,3 +5,4 @@ export {default as NotFound} from './not-found';
 export {default as CollapseButton} from './collapse-button';
 export {default as NotPermission} from './not-permission';
 export {default as Icon} from './icon';
+export {default as message} from './message';
