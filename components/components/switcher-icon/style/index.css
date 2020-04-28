@@ -1,0 +1,19 @@
+.swc-switcher-icon {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+.swc-switcher-icon > svg {
+  width: 12px;
+  height: 12px;
+  line-height: 1;
+  border-radius: 50%;
+  position: relative;
+  color: #0a0f0e;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #136c5e;
+}
+.swc-switcher-icon.hidden {
+  visibility: hidden;
+}

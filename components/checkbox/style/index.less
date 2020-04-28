@@ -1,0 +1,26 @@
+.swc-checkbox {
+  display: inline-block;
+  line-height: 1;
+  text-align: center;
+  vertical-align: middle;
+  & > span {
+    display: inline-block;
+    background: #0e1a18;
+    border: 1px solid #136c5e;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+}
+.swc-checkbox.checked {
+  border: none;
+  background: transparent;
+  & > span {
+    border: none;
+    & > .swc-custom-icon-checkbox {
+      color: #ff9200;
+      border-radius: 2px;
+    }
+  }
+}

@@ -1,0 +1,70 @@
+.swc-tree {
+  display: block;
+  background: #121a19;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.swc-tree-inner {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.swc-tree-container {
+  display: inline-block;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.swc-tree-item.is-parent {
+  background: #172422;
+}
+
+.swc-tree-item {
+  display: block;
+  text-align: left;
+  vertical-align: middle;
+  padding-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.swc-tree-item > .swc-switcher-icon,
+.swc-tree-item > .swc-checkbox {
+  margin-right: 4px;
+  float: left;
+  line-height: 22px;
+}
+
+.swc-tree-item-text {
+  display: inline-block;
+  cursor: default;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swc-tree-item:hover {
+  background: #193d37;
+}
+
+.swc-tree-item.disabled > .swc-tree-item-text {
+  color: #8f9598;
+}
+
+.swc-tree-fixed-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.swc-tree-fixed-bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
