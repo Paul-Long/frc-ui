@@ -15,6 +15,7 @@ class Tree extends React.PureComponent<Props, State> {
   showColorKeys: Array<string | number> = [];
   wrap?: HTMLDivElement;
   type: Scroll_Type = Scroll_Type.ALL;
+  showCount: number = 0;
 
   constructor(props: Props) {
     super(props);
@@ -41,9 +42,10 @@ class Tree extends React.PureComponent<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    const state: State = {};
+    let state: State = {};
     if (nextProps.selectedKeys !== this.props.selectedKeys) {
       state.selectedKeys = nextProps.selectedKeys || [];
+      this.showColorKeys = this.getSelectedPath(state.selectedKeys, nextProps.options);
     }
     if (nextProps.expandedKeys !== this.props.expandedKeys) {
       state.expandedKeys = nextProps.expandedKeys || [];
@@ -52,14 +54,11 @@ class Tree extends React.PureComponent<Props, State> {
       state.tops = [];
       state.bottoms = [];
       state.options = this.getOptions(state.expandedKeys || this.state.expandedKeys, nextProps.options);
+      state = {...state, ...this.update(state.options)};
     }
     if (Object.keys(state).length > 0) {
-      this.setState(state, this.handleResize);
+      this.setState(state);
     }
-  }
-
-  componentDidUpdate() {
-    this.handleResize();
   }
 
   handleResize = () => {
@@ -68,7 +67,9 @@ class Tree extends React.PureComponent<Props, State> {
     if (this.wrap && fixedTopBottom) {
       const height = this.wrap.clientHeight;
       const width = this.wrap.clientWidth;
-      this.setState({width, height});
+      if (width !== this.state.width || height !== this.state.height) {
+        this.setState({width, height});
+      }
       const length = (options || []).length + (tops || []).length + (bottoms || []).length;
 
       let type;
@@ -77,9 +78,11 @@ class Tree extends React.PureComponent<Props, State> {
       } else {
         type = Scroll_Type.CONTAINER;
       }
-      if (type !== this.type) {
+      if (type !== this.type || this.showCount !== (options || []).length) {
+        this.showCount = (options || []).length;
         this.type = type;
-        this.update();
+        const opts: any = this.update(this.getOptions());
+        this.setState(opts);
       }
     }
   };
@@ -94,16 +97,16 @@ class Tree extends React.PureComponent<Props, State> {
   getContainerHeight = () => {
 
   };
-  update = () => {
+  update = (options: Array<OptionProps> = []) => {
     const {rowHeight} = this.props;
     const {height} = this.state;
-    const options = this.state.options || [];
-    if (
-      this.type !== Scroll_Type.CONTAINER ||
-      !height ||
-      (options.length * rowHeight < height)
-    ) {
-      return;
+    if (height && (options.length * rowHeight > height)) {
+      this.type = Scroll_Type.CONTAINER;
+    } else {
+      this.type = Scroll_Type.ALL;
+    }
+    if (this.type !== Scroll_Type.CONTAINER) {
+      return {tops: [], bottom: [], options};
     }
     const tops: Array<OptionProps> = [], opts: Array<OptionProps> = [], bottoms: Array<OptionProps> = [];
     let start: Insert_Type = Insert_Type.TOP;
@@ -121,7 +124,7 @@ class Tree extends React.PureComponent<Props, State> {
         opts.push(o);
       }
     }
-    this.setState({tops, options: opts, bottoms});
+    return {tops, options: opts, bottoms};
   };
   onChange = (option: OptionProps) => {
     return (type: string, flag: boolean) => {
@@ -150,7 +153,7 @@ class Tree extends React.PureComponent<Props, State> {
           this.showColorKeys = this.getSelectedPath(keys);
           this.setState({selectedKeys: keys}, () => {
             if (typeof onChange === 'function') {
-              onChange(this.state.selectedKeys || []);
+              onChange(this.state.selectedKeys || [], option);
             }
           });
         } else if (type === 'expand') {
@@ -159,10 +162,10 @@ class Tree extends React.PureComponent<Props, State> {
             keys = [option.value];
           }
           options = this.getOptions(keys);
-          this.setState({expandedKeys: keys, tops: [], bottoms: [], options}, () => {
-            this.handleResize();
+          const opts = this.update(options);
+          this.setState({expandedKeys: keys, ...opts}, () => {
             if (typeof onExpand === 'function') {
-              onExpand(this.state.expandedKeys || []);
+              onExpand(this.state.expandedKeys || [], option);
             }
           });
         }

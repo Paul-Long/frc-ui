@@ -19,8 +19,8 @@ export interface Props {
   selectedKeys?: Array<string | number>,
   expandedKeys?: Array<string | number>,
   rowHeight: number,
-  onChange?: (selectedKeys: Array<string | number>) => void,
-  onExpand?: (expandedKeys: Array<string | number>) => void,
+  onChange?: (selectedKeys: Array<string | number>, option: OptionProps) => void,
+  onExpand?: (expandedKeys: Array<string | number>, option: OptionProps) => void,
   fixedTopBottom: boolean
 }
 
