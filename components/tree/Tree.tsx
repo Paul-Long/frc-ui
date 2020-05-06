@@ -19,6 +19,7 @@ class Tree extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.showColorKeys = this.getSelectedPath(props.selectedKeys || [], props.options);
     this.state = {
       selectedKeys: props.selectedKeys || [],
       expandedKeys: props.expandedKeys || [],
@@ -55,6 +56,11 @@ class Tree extends React.PureComponent<Props, State> {
       state.bottoms = [];
       state.options = this.getOptions(state.expandedKeys || this.state.expandedKeys, nextProps.options);
       state = {...state, ...this.update(state.options)};
+      if (Object.prototype.hasOwnProperty.call(state, 'selectedKeys')) {
+        this.showColorKeys = this.getSelectedPath(state.selectedKeys || [], nextProps.options);
+      } else {
+        this.showColorKeys = this.getSelectedPath(this.state.selectedKeys || [], nextProps.options);
+      }
     }
     if (Object.keys(state).length > 0) {
       this.setState(state);
@@ -130,33 +136,37 @@ class Tree extends React.PureComponent<Props, State> {
     return (type: string, flag: boolean) => {
       const {rowHeight, onChange, onExpand} = this.props;
       const {height} = this.state;
+      const selectedKeys = this.state.selectedKeys || [];
+      const expandedKeys = this.state.expandedKeys || [];
       const {value} = option;
-      let key: string = '';
+      let keys: Array<string | number>;
       switch (type) {
         case 'check':
-          key = 'selectedKeys';
-          break;
-        case 'expand':
-          key = 'expandedKeys';
-          break;
-      }
-      if (key) {
-        let keys: Array<string | number> = this.state[key];
-        if (flag) {
-          if (this.state[key].indexOf(value) < 0) {
-            keys = [...this.state[key], value];
+          keys = selectedKeys;
+          if (flag) {
+            if (keys.indexOf(value) < 0) {
+              keys = [...selectedKeys, value];
+            }
+          } else {
+            keys = selectedKeys.filter((v: string | number) => v !== value);
           }
-        } else {
-          keys = this.state[key].filter((v: string | number) => v !== value);
-        }
-        if (type === 'check') {
           this.showColorKeys = this.getSelectedPath(keys);
           this.setState({selectedKeys: keys}, () => {
             if (typeof onChange === 'function') {
-              onChange(this.state.selectedKeys || [], option);
+              onChange(keys || [], option);
             }
           });
-        } else if (type === 'expand') {
+          break;
+        case 'expand':
+          keys = expandedKeys;
+          if (flag) {
+            if (keys.indexOf(value) < 0) {
+              keys = [...expandedKeys, value];
+            }
+          } else {
+            const childKeys = this.expandKeys(value);
+            keys = keys.filter((v: string|number) => (childKeys.indexOf(v)<0));
+          }
           let options: Array<OptionProps> = this.getOptions(keys);
           if (option.index === 0 && (height && options.length * rowHeight > height)) {
             keys = [option.value];
@@ -165,12 +175,28 @@ class Tree extends React.PureComponent<Props, State> {
           const opts = this.update(options);
           this.setState({expandedKeys: keys, ...opts}, () => {
             if (typeof onExpand === 'function') {
-              onExpand(this.state.expandedKeys || [], option);
+              onExpand(keys || [], option);
             }
           });
-        }
+          break;
       }
     };
+  };
+
+  expandKeys = (value: string | number, options: Array<OptionProps> = this.props.options, keys: Array<string | number> = [], found: boolean = false) => {
+    options.forEach(o => {
+      const children = o.children || [];
+      if (o.value === value) {
+        found = true;
+      }
+      if (found) {
+        keys.push(o.value);
+      }
+      if (children.length > 0) {
+        keys = this.expandKeys(value, children, keys, found);
+      }
+    });
+    return keys;
   };
 
   getSelectedPath = (
