@@ -19,6 +19,7 @@
 }
 .swc-checkbox.checked > span {
   border: none;
+  background: transparent;
 }
 .swc-checkbox.checked > span > .swc-custom-icon-checkbox {
   color: #ff9200;

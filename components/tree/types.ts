@@ -7,7 +7,7 @@ export interface OptionProps {
   disabled?: boolean,
   index: number,
   expandPlace?: boolean,
-  parent?: string | number,
+  parent: string | number,
   expandedIcon?: Function,
   children?: Array<OptionProps>
 }

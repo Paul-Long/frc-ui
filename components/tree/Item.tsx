@@ -25,27 +25,16 @@ export default function(props: ItemProps) {
     }
   }
 
+  const paddingLeft = (index * 20) + 10;
   let style: CSSProperties = {
-    paddingLeft: (index * 20) + 10,
+    paddingLeft: paddingLeft,
     height: rowHeight,
     lineHeight: `${rowHeight}px`
   };
   if (hasSelected) {
     style.color = '#F9C152';
   }
-  const hidden = !expandEnable && !expandPlace;
-  const textStyle = {
-    width: `calc(100% - ${(!hidden ? 12 + 4 : 0) + (selectEnable ? 12 + 4 : 0)}px)`
-  };
-  let content: string = text;
-  if (typeof render === 'function') {
-    const span: HTMLSpanElement = document.createElement('span');
-    span.innerText = content;
-    span.style.visibility = 'hidden';
-    document.body.appendChild(span);
-    content = render(option, {parentWidth, width: span.offsetWidth});
-    document.body.removeChild(span);
-  }
+  let hidden = !expandEnable && !expandPlace;
   let expandProps: SwitcherProps = {
     expanded, hidden: !expandEnable && expandPlace,
     onChange: expand,
@@ -54,11 +43,24 @@ export default function(props: ItemProps) {
   let otherIcon: Element;
   if (typeof expandedIcon === 'function') {
     otherIcon = expandedIcon(option, expanded, checked);
-    if (!hidden) {
-      expandProps.icon = otherIcon;
-    }
+    hidden = false;
+    expandProps.hidden = false;
+    expandProps.icon = otherIcon;
   }
   let icon = !hidden && <SwitcherIcon {...expandProps} />;
+  const textLeftWidth = (!hidden ? 12 + 4 : 0) + (selectEnable ? 12 + 4 : 0);
+  const textStyle = {
+    width: `calc(100% - ${textLeftWidth}px)`
+  };
+  let content: string = text;
+  if (typeof render === 'function') {
+    const span: HTMLSpanElement = document.createElement('span');
+    span.innerText = content;
+    span.style.visibility = 'hidden';
+    document.body.appendChild(span);
+    content = render(option, {parentWidth: parentWidth - textLeftWidth - paddingLeft - 10, width: span.offsetWidth});
+    document.body.removeChild(span);
+  }
   return (
     <div className={cls} style={style}>
       {icon}
