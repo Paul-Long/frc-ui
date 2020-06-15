@@ -1,0 +1,52 @@
+.ant-input {
+  color: #f9c152;
+  background-color: #172422;
+  &:hover {
+    border-color: #ffb000 !important;
+  }
+  &:focus {
+    border-color: #ffb000 !important;
+    background: #ff9300 !important;
+    color: #1e1e1e;
+  }
+}
+.swc-input {
+  & > .ant-input {
+    color: #f9c152;
+    &:hover {
+      border-color: #ffb000 !important;
+    }
+    &:focus {
+      border-color: #ffb000 !important;
+      background: #ff9300 !important;
+      color: #1e1e1e;
+    }
+  }
+
+  &-clear {
+    font-size: inherit;
+    color: #193d37;
+    visibility: hidden;
+    &:hover {
+      color: #136c5e;
+    }
+  }
+  &-clear-focus {
+    visibility: visible;
+    color: #68420f;
+    &:hover {
+      color: #a35000;
+    }
+  }
+}
+.swc-input-focus {
+  & > .ant-input {
+    border-color: #ffb000 !important;
+    background: #ff9300 !important;
+    color: #1e1e1e;
+  }
+}
+
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+  border-color: #ffb000 !important;
+}

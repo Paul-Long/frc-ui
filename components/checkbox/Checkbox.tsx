@@ -8,7 +8,8 @@ interface Props {
   className?: string,
   prefix?: string,
   disabled?: boolean,
-  onChange?: Function
+  onChange?: Function,
+  children?: any
 }
 const defaultProps = {
   checked: false,
@@ -18,9 +19,10 @@ const defaultProps = {
 };
 type DefaultProps = Partial<typeof defaultProps>;
 export default function (props: Props & DefaultProps) {
-  const {prefix, checked, className, disabled, onChange, style} = props;
+  const {prefix, checked, className, disabled, onChange, style, children} = props;
   const cls = classNames('swc-checkbox', className, {
     checked: checked,
+    [`${prefix}-child`]: !!children,
     [`${prefix}-disabled`]: disabled
   });
   function click(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -38,6 +40,7 @@ export default function (props: Props & DefaultProps) {
       style={style}
     >
       <span className='swc-checkbox-inner'>{child}</span>
+      {children}
     </div>
   );
 }

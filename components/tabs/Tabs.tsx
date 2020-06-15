@@ -1,15 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
-import Radio, {RadioChangeEvent} from 'antd/es/radio'
+import Radio, {RadioChangeEvent} from 'antd/es/radio';
 
 const {Group, Button} = Radio;
 type OptionProps = {label: string, value: string | number, disabled?: boolean, color?: string, background?: string, width?: number, render?: Function};
+
 interface TabsProps {
   className?: string,
   onChange?: Function,
   showAll?: boolean,
   multi?: boolean,
-  value?: string|number|Array<string | number>,
+  value?: string | number | Array<string | number>,
   options: Array<OptionProps>,
   children?: any,
   itemWidth?: number,
@@ -17,7 +18,7 @@ interface TabsProps {
 }
 
 interface TabsState {
-  value?: string|number|Array<string | number>,
+  value?: string | number | Array<string | number>,
 }
 
 class Tabs extends React.PureComponent<TabsProps, TabsState> {
@@ -26,16 +27,17 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
     multi: false,
     itemWidth: 60
   };
+
   constructor(props: any) {
     super(props);
     const {showAll, multi} = props;
     let value = props.value;
     if (showAll && !value) {
-      value = (multi ? ['all'] : 'all');
+      value = value || (multi ? ['all'] : 'all');
     }
     this.state = {
       value
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps: TabsProps) {
@@ -46,29 +48,33 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
 
   h_change = (ev: RadioChangeEvent) => {
     const {multi, onChange, options, showAll} = this.props;
-    let stateValue  = this.state.value;
+    let stateValue = this.state.value;
     let value = ev.target.value;
     if (value === undefined) return;
     const disabled = options.some(o => o.value === value && o.disabled === true);
     if (disabled) return;
     if (multi) {
-      if (value === 'all') {
-        value = ['all'];
-      } else {
-        const sv = stateValue || [];
-        if (sv instanceof Array) {
-          if (!sv.some(va => va === value)) {
-            value = [...sv.filter(v => v !== 'all'), value];
-          } else {
-            value = sv.filter(v => v !== value);
+      if (!!ev.nativeEvent.ctrlKey) {
+        if (value === 'all') {
+          value = ['all'];
+        } else {
+          const sv = stateValue || [];
+          if (sv instanceof Array) {
+            if (!sv.some(va => va === value)) {
+              value = [...sv.filter(v => v !== 'all'), value];
+            } else {
+              value = sv.filter(v => v !== value);
+            }
           }
         }
-      }
-      if (showAll) {
-        const sa = options.some(o => !o.disabled && value.indexOf(o.value) < 0);
-        if (!sa || value.length === 0) {
-          value = ['all'];
+        if (showAll) {
+          const sa = options.some(o => !o.disabled && value.indexOf(o.value) < 0);
+          if (!sa || value.length === 0) {
+            value = ['all'];
+          }
         }
+      } else {
+        value = [value];
       }
     }
     this.setState({value}, () => {
@@ -80,13 +86,8 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
 
   f_checked = (v: string | number) => {
     const {value} = this.state;
-    const {multi} = this.props;
-    if (multi) {
-      const vs = value || [];
-      return vs instanceof Array && vs.some(va => va === v);
-    } else {
-      return value === v;
-    }
+    const vs = value || [];
+    return (vs instanceof Array && vs.some(va => va === v)) || value === v;
   };
 
   r_button = () => {
@@ -97,7 +98,7 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
       options = [all, ...options];
     }
     return (options || []).map(o => {
-      const style: {background?: string, color?: string, width?: number} = {width: this.props.itemWidth};
+      const style: React.CSSProperties = {minWidth: this.props.itemWidth};
       const checked = this.f_checked(o.value);
       checked && (style.background = '#FF9300');
       checked && (style.color = '#1E1E1E');
@@ -116,9 +117,10 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
         };
         return o.render(Button, props);
       }
-      return <Button key={o.value} style={style} value={o.value} className={cls} checked={false}>{o.label}</Button>
+      return <Button key={o.value} style={style} value={o.value} className={cls} checked={false}>{o.label}</Button>;
     });
   };
+
   render() {
     const {className, children, label, ...other} = this.props;
     const {value} = this.state;
@@ -137,7 +139,7 @@ class Tabs extends React.PureComponent<TabsProps, TabsState> {
           <label>{label}:</label>
           {child}
         </div>
-      )
+      );
     }
     return child;
   }

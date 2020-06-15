@@ -3,7 +3,8 @@ import classNames from 'classnames';
 
 interface IconProps {
   type: string,
-  className?: string
+  className?: string,
+  style?: React.CSSProperties
 }
 export default function (props: IconProps) {
   const {type, className, ...other} = props;

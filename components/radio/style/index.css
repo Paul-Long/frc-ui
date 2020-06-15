@@ -1,0 +1,25 @@
+.swc-radio .ant-radio .ant-radio-inner {
+  background: transparent;
+  border-color: #136c5e;
+  width: 12px;
+  height: 12px;
+}
+.swc-radio .ant-radio .ant-radio-inner::after {
+  width: 6px;
+  height: 6px;
+  left: 2px;
+  top: 2px;
+}
+.swc-radio span.ant-radio + * {
+  padding-left: 4px;
+  padding-right: 0;
+}
+.swc-radio.ant-radio-wrapper-checked {
+  color: #f9c152 !important;
+}
+.swc-radio .ant-radio-checked .ant-radio-inner {
+  border-color: #ff9200 !important;
+}
+.swc-radio .ant-radio-checked .ant-radio-inner:after {
+  background-color: #ff9200 !important;
+}
