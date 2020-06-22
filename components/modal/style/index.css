@@ -1,4 +1,7 @@
 .swc-modal-wrap .ant-modal-header {
+  padding: 4px 10px 3px;
+  height: 30px;
+  line-height: 30px;
   background: #193d37;
 }
 .swc-modal-wrap .ant-modal-content {

@@ -14,6 +14,9 @@
 .swc-calendar-picker-container .ant-calendar-range {
   border: 1px solid #136C5E;
 }
+.swc-calendar-picker-container .ant-calendar-in-range-cell:before {
+  background: #136C5E;
+}
 .swc-calendar-picker-container .ant-calendar-header {
   height: 30px;
   line-height: 30px;
