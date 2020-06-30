@@ -8,6 +8,7 @@
     background-color: #193D37 !important;
   }
 }
+
 .swc-select.ant-select-focused {
   .ant-select-selection {
     color: #1E1E1E;
@@ -15,30 +16,45 @@
     background-color: #FFB000;
   }
 }
-.ant-select-dropdown {
- &-menu {
-   &-item {
-     padding: 0 10px;
-     &:hover {
-       background: #136C5E;
-     }
-     &-group-title {
-       color: #F9C152;
-       padding: 0 10px;
-       height: 22px;
-       line-height: 22px;
-       font-size: 12px;
-     }
-   }
-   &-item-selected {
-     color: #F9C152;
-     background: #0C4F44;
-   }
- }
-}
-.ant-select-dropdown-menu-item .ant-select-dropdown-menu-item-selected {
 
+.swc-select-dropdown {
+  .ant-select-dropdown {
+    &-menu {
+      &-item {
+        padding: 0 10px;
+        &:hover {
+          background: #136C5E !important;
+        }
+        &-group-title {
+          color: #F9C152 !important;
+          padding: 0 10px;
+          height: 22px;
+          line-height: 22px;
+          font-size: 12px;
+        }
+      }
+      &-item-selected {
+        color: #F9C152 !important;
+        background: #0C4F44 !important;
+        &::after {
+          content: "";
+          position: absolute;
+          right: 6px;
+          top: 6px;
+          width: 12px;
+          height: 6px;
+          border-radius: 1px;
+          border: 2px solid #f9c152;
+          border-top: none;
+          border-right: none;
+          background: transparent;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
 }
+
 .swc-select-clear {
   font-size: 12px;
   color: #68420F;

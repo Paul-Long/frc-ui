@@ -26,14 +26,15 @@ class SWCSelect<T = SelectValue> extends React.Component<SelectProps, {}> {
   }
 
   render() {
-    const {className, showSearch, ...other} = this.props;
+    const {className, showSearch, dropdownClassName, ...other} = this.props;
     const cls = classNames('swc-select', className);
+    const dropCls = classNames('swc-select-dropdown', dropdownClassName);
     if (showSearch) {
       other.clearIcon = <Icon className='swc-select-clear' type='close-square' />;
       other.showArrow = false;
       other.allowClear = true;
     }
-    return (<Select ref={this.saveSelect} className={cls} showSearch={!!showSearch} {...other} />);
+    return (<Select ref={this.saveSelect} className={cls} showSearch={!!showSearch} dropdownClassName={dropCls} {...other} />);
   }
 }
 
