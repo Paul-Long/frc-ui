@@ -28,17 +28,17 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   pointer-events: all;
 }
-.swc-message-success {
+.swc-message-success > .swc-icon {
   color: #52c41a;
 }
-.swc-message-error {
+.swc-message-error > .swc-icon {
   color: #dc4444;
 }
-.swc-message-warning {
+.swc-message-warning > .swc-icon {
   color: #faad14;
 }
-.swc-message-info,
-.swc-message-loading {
+.swc-message-info > .swc-icon,
+.swc-message-loading > .swc-icon {
   color: #1890ff;
 }
 .swc-message-notice.move-up-leave.move-up-leave-active {

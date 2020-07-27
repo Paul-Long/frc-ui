@@ -21,7 +21,8 @@ export interface Props {
   rowHeight: number,
   onChange?: (selectedKeys: Array<string | number>, option: OptionProps) => void,
   onExpand?: (expandedKeys: Array<string | number>, option: OptionProps) => void,
-  fixedTopBottom: boolean
+  fixedTopBottom: boolean,
+  clickRow?: boolean
 }
 
 export interface State {
@@ -43,7 +44,8 @@ export interface ItemProps {
   checked: boolean,
   rowHeight: number,
   parentWidth: number,
-  onChange?: (type: string, value: boolean) => void
+  onChange?: (type: string, value: boolean) => void,
+  clickRow?: boolean
 }
 
 export enum Scroll_Type {

@@ -10,7 +10,8 @@ class Tree extends React.PureComponent<Props, State> {
     selectedKeys: [],
     expandedKeys: [],
     rowHeight: 22,
-    fixedTopBottom: true
+    fixedTopBottom: true,
+    clickRow: true
   };
   showColorKeys: Array<string | number> = [];
   wrap?: HTMLDivElement;
@@ -270,7 +271,7 @@ class Tree extends React.PureComponent<Props, State> {
   };
 
   renderItem = (type: Render_Type) => {
-    const {prefix, rowHeight} = this.props;
+    const {prefix, rowHeight, clickRow} = this.props;
     const options: Array<OptionProps> = this.state[type.toString()];
     const {selectedKeys, expandedKeys, width} = this.state;
     return options.map(o => {
@@ -279,6 +280,7 @@ class Tree extends React.PureComponent<Props, State> {
           key={`${o.value}-${o.index}`}
           prefix={prefix}
           option={o}
+          clickRow={clickRow}
           parentWidth={width || 100}
           rowHeight={rowHeight || 22}
           hasSelected={this.showColorKeys.indexOf(o.value) > -1}

@@ -6,7 +6,7 @@ import {ItemProps} from './types';
 
 
 export default function(props: ItemProps) {
-  const {prefix, className, option, onChange, expanded, checked, hasSelected, rowHeight, parentWidth} = props;
+  const {prefix, className, option, onChange, expanded, checked, hasSelected, rowHeight, parentWidth, clickRow} = props;
   const {text, selectEnable, expandEnable, expandPlace, disabled, index, render, expandedIcon} = option;
   const cls = classNames(`${prefix}-item`, className, {
     disabled,
@@ -61,11 +61,14 @@ export default function(props: ItemProps) {
     content = render(option, {parentWidth: parentWidth - textLeftWidth - paddingLeft - 10, width: span.offsetWidth});
     document.body.removeChild(span);
   }
+  const contentProps: any = {};
+  if (clickRow) contentProps.onClick = expand;
+  if (selectEnable) contentProps.onClick = select;
   return (
     <div className={cls} style={style}>
       {icon}
       {selectEnable && <Checkbox checked={checked} onChange={select} style={{lineHeight: `${rowHeight}px`}} />}
-      <div className={`${prefix}-item-text`} style={textStyle}>
+      <div className={`${prefix}-item-text`} style={textStyle} {...contentProps}>
         {content}
       </div>
     </div>
