@@ -1,26 +1,27 @@
 import React from 'react';
 import classNames from 'classnames';
-import Input, {InputProps} from 'antd/es/input'
+import Input, {InputProps} from 'antd/es/input';
 import Search from './Search';
 import Icon from '../icon';
 
 export interface InputState {
   value: any;
-  showClear: boolean,
-  focus: boolean
+  showClear: boolean;
+  focus: boolean;
 }
 class SInput extends React.Component<InputProps, InputState> {
   input: any;
   timer: any;
   clearing: boolean = false;
   static Search: typeof Search;
+  static TextArea: typeof Input.TextArea;
   constructor(props: InputProps) {
     super(props);
     this.state = {
       value: props.value,
       showClear: false,
       focus: false
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps: InputProps) {
@@ -33,12 +34,12 @@ class SInput extends React.Component<InputProps, InputState> {
   setValue(
     value: string,
     e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLElement, MouseEvent>,
-    callback?: () => void,
+    callback?: () => void
   ) {
     if (!('value' in this.props)) {
-      this.setState({ value }, callback);
+      this.setState({value}, callback);
     }
-    const { onChange } = this.props;
+    const {onChange} = this.props;
     if (onChange) {
       let event = e;
       if (e.type === 'click') {
@@ -80,7 +81,7 @@ class SInput extends React.Component<InputProps, InputState> {
 
   onFocus = (ev: any) => {
     const {onFocus} = this.props;
-    (typeof onFocus === 'function') && onFocus(ev);
+    typeof onFocus === 'function' && onFocus(ev);
     this.setState({focus: true});
     if (this.timer) {
       clearTimeout(this.timer);
@@ -91,7 +92,7 @@ class SInput extends React.Component<InputProps, InputState> {
   onBlur = (ev: any) => {
     if (this.clearing) return ev;
     const {onBlur} = this.props;
-    (typeof onBlur === 'function') && onBlur(ev);
+    typeof onBlur === 'function' && onBlur(ev);
     this.timer = setTimeout(() => {
       this.setState({focus: false});
     }, 100);
@@ -112,13 +113,17 @@ class SInput extends React.Component<InputProps, InputState> {
       const iconClass = classNames('swc-input-clear', {
         ['swc-input-clear-focus']: focus
       });
-      other.suffix = <span onMouseDown={this.handleClear}><Icon className={iconClass} type='close-square' style={{fontSize: 'inherit'}} /></span>;
+      other.suffix = (
+        <span onMouseDown={this.handleClear}>
+          <Icon className={iconClass} type='close-square' style={{fontSize: 'inherit'}} />
+        </span>
+      );
     }
     other.value = value;
     other.onChange = this.handleChange;
     other.onBlur = this.onBlur;
     other.onFocus = this.onFocus;
-    return <Input ref={this.saveInput} className={cls} {...other} />
+    return <Input ref={this.saveInput} className={cls} {...other} />;
   }
 }
 

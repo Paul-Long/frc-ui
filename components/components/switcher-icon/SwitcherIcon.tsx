@@ -8,11 +8,11 @@ const defaultProps = {
 };
 
 export interface SwitcherProps {
-  expanded: boolean,
-  onChange?: Function,
-  hidden?: boolean,
-  style?: CSSProperties,
-  icon?: Element
+  expanded: boolean;
+  onChange?: Function;
+  hidden?: boolean;
+  style?: CSSProperties;
+  icon?: Element;
 }
 
 type DefaultProps = Partial<typeof defaultProps>;
@@ -27,6 +27,9 @@ export default function(props: SwitcherProps & DefaultProps) {
   const cls = classNames('swc-switcher-icon', {
     hidden
   });
-  return (<div className={cls} style={style}>{icon || <Icon type={type} onClick={onClick} />}</div>)
+  return (
+    <div className={cls} style={style}>
+      {icon || <Icon type={type} onClick={onClick} />}
+    </div>
+  );
 }
-

@@ -45,12 +45,12 @@ gulp.task('css', function() {
 
 gulp.task('copy-style', function() {
   gulp
-    .src(['components/**/style/*.less', 'components/**/style/*.css'], {
+    .src(['components/**/style/*.less', 'components/**/style/*.css', 'components/**/style/*.png', 'components/**/images/*.png'], {
       base: 'components'
     })
     .pipe(gulp.dest('package/es/'));
   gulp
-    .src(['components/**/style/*.less', 'components/**/style/*.css'], {
+    .src(['components/**/style/*.less', 'components/**/style/*.css', 'components/**/style/*.png', 'components/**/images/*.png'], {
       base: 'components'
     })
     .pipe(gulp.dest('package/lib/'));

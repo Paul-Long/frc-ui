@@ -14,3 +14,4 @@ export {default as DatePicker} from './date-picker';
 export {default as Modal} from './modal';
 export {default as Radio} from './radio';
 export {default as Select} from './select';
+export {default as Chat} from './chat';

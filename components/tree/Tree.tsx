@@ -110,7 +110,7 @@ class Tree extends React.PureComponent<Props, State> {
   update = (options: Array<OptionProps> = []) => {
     const {rowHeight} = this.props;
     const {height} = this.state;
-    if (height && (options.length * rowHeight > height)) {
+    if (height && options.length * rowHeight > height) {
       this.type = Scroll_Type.CONTAINER;
     } else {
       this.type = Scroll_Type.ALL;
@@ -118,7 +118,9 @@ class Tree extends React.PureComponent<Props, State> {
     if (this.type !== Scroll_Type.CONTAINER) {
       return {tops: [], bottoms: [], options};
     }
-    const tops: Array<OptionProps> = [], opts: Array<OptionProps> = [], bottoms: Array<OptionProps> = [];
+    const tops: Array<OptionProps> = [],
+      opts: Array<OptionProps> = [],
+      bottoms: Array<OptionProps> = [];
     let start: Insert_Type = Insert_Type.TOP;
     for (let i = 0; i < options.length; i++) {
       const o = options[i];
@@ -169,12 +171,12 @@ class Tree extends React.PureComponent<Props, State> {
             }
           } else {
             const cKeys = this.expandKeys(value);
-            keys = keys.filter((v: string | number) => (cKeys.indexOf(v) < 0));
+            keys = keys.filter((v: string | number) => cKeys.indexOf(v) < 0);
           }
           let options: Array<OptionProps> = this.getOptions(keys);
           if (height && options.length * rowHeight > height) {
             const childKeys = this.getChildKeys(option.index === 0 ? option.value : option.parent);
-            keys = keys.filter(k => childKeys.indexOf(k) > -1);
+            keys = keys.filter((k) => childKeys.indexOf(k) > -1);
           }
           options = this.getOptions(keys);
           const opts = this.update(options);
@@ -188,7 +190,12 @@ class Tree extends React.PureComponent<Props, State> {
     };
   };
 
-  getChildKeys = (value: string | number, options: Array<OptionProps> = this.props.options, keys: Array<string | number> = [], flag: boolean = false) => {
+  getChildKeys = (
+    value: string | number,
+    options: Array<OptionProps> = this.props.options,
+    keys: Array<string | number> = [],
+    flag: boolean = false
+  ) => {
     for (let i = 0; i < options.length; i++) {
       const option: OptionProps = options[i];
       if (option.value === value || flag) {
@@ -202,8 +209,13 @@ class Tree extends React.PureComponent<Props, State> {
     return keys;
   };
 
-  expandKeys = (value: string | number, options: Array<OptionProps> = this.props.options, keys: Array<string | number> = [], found: boolean = false) => {
-    options.forEach(o => {
+  expandKeys = (
+    value: string | number,
+    options: Array<OptionProps> = this.props.options,
+    keys: Array<string | number> = [],
+    found: boolean = false
+  ) => {
+    options.forEach((o) => {
       const children = o.children || [];
       if (children.length > 0) {
         if (o.value === value || found) {
@@ -220,12 +232,12 @@ class Tree extends React.PureComponent<Props, State> {
     options: Array<OptionProps> = this.props.options,
     keys: Array<string | number> = []
   ) => {
-    options.forEach(o => {
+    options.forEach((o) => {
       const children = o.children || [];
       if (children.length > 0) {
         this.getSelectedPath(selectedKeys, children, keys);
       }
-      if (selectedKeys.indexOf(o.value) > -1 || children.some(c => keys.indexOf(c.value) > -1)) {
+      if (selectedKeys.indexOf(o.value) > -1 || children.some((c) => keys.indexOf(c.value) > -1)) {
         keys.push(o.value);
       }
     });
@@ -241,8 +253,8 @@ class Tree extends React.PureComponent<Props, State> {
     parent: string | number = ''
   ) => {
     options = options || [];
-    const expandPlace = options.some(o => (o.children && o.children.length > 0));
-    options.forEach(o => {
+    const expandPlace = options.some((o) => o.children && o.children.length > 0);
+    options.forEach((o) => {
       const {children, ...other} = o;
       const expandEnable = children && children.length > 0;
       const one = {expandEnable, ...other, index, expandPlace, parent};
@@ -274,7 +286,7 @@ class Tree extends React.PureComponent<Props, State> {
     const {prefix, rowHeight, clickRow} = this.props;
     const options: Array<OptionProps> = this.state[type.toString()];
     const {selectedKeys, expandedKeys, width} = this.state;
-    return options.map(o => {
+    return options.map((o) => {
       return (
         <Item
           key={`${o.value}-${o.index}`}
@@ -312,11 +324,15 @@ class Tree extends React.PureComponent<Props, State> {
     return (
       <div className={cls} ref={this.saveRef('wrap')}>
         <div className={`${prefix}-inner`} style={innerStyle}>
-          <div className={fixedTop} style={topStyle}>{this.renderItem(Render_Type.tops)}</div>
+          <div className={fixedTop} style={topStyle}>
+            {this.renderItem(Render_Type.tops)}
+          </div>
           <div className={`${prefix}-container`} style={containerStyle}>
             {this.renderItem(Render_Type.options)}
           </div>
-          <div className={fixedBottom} style={bottomStyle}>{this.renderItem(Render_Type.bottoms)}</div>
+          <div className={fixedBottom} style={bottomStyle}>
+            {this.renderItem(Render_Type.bottoms)}
+          </div>
         </div>
       </div>
     );

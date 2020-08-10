@@ -4,13 +4,16 @@ import classNames from 'classnames';
 
 class SWCModal extends React.Component<ModalProps> {
   render() {
-    const {wrapClassName, okButtonProps, cancelButtonProps,  ...other} = this.props;
+    const {wrapClassName, okButtonProps, cancelButtonProps, ...other} = this.props;
     const props: ModalProps = {
-      wrapClassName : classNames(wrapClassName, 'swc-modal-wrap'),
+      wrapClassName: classNames(wrapClassName, 'swc-modal-wrap'),
       okButtonProps: {...(okButtonProps || {}), className: 'swc-modal-ok'},
-      cancelButtonProps: {...(cancelButtonProps || {}), className: 'swc-modal-cancel'}
+      cancelButtonProps: {
+        ...(cancelButtonProps || {}),
+        className: 'swc-modal-cancel'
+      }
     };
-    return ( <Modal {...other} {...props} />);
+    return <Modal {...other} {...props} />;
   }
 }
 

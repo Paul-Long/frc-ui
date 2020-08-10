@@ -4,7 +4,6 @@ import Checkbox from '../checkbox';
 import SwitcherIcon, {SwitcherProps} from '../components/switcher-icon';
 import {ItemProps} from './types';
 
-
 export default function(props: ItemProps) {
   const {prefix, className, option, onChange, expanded, checked, hasSelected, rowHeight, parentWidth, clickRow} = props;
   const {text, selectEnable, expandEnable, expandPlace, disabled, index, render, expandedIcon} = option;
@@ -25,7 +24,7 @@ export default function(props: ItemProps) {
     }
   }
 
-  const paddingLeft = (index * 20) + 10;
+  const paddingLeft = index * 20 + 10;
   let style: CSSProperties = {
     paddingLeft: paddingLeft,
     height: rowHeight,
@@ -36,7 +35,8 @@ export default function(props: ItemProps) {
   }
   let hidden = !expandEnable && !expandPlace;
   let expandProps: SwitcherProps = {
-    expanded, hidden: !expandEnable && expandPlace,
+    expanded,
+    hidden: !expandEnable && expandPlace,
     onChange: expand,
     style: {lineHeight: `${rowHeight}px`}
   };
@@ -58,7 +58,10 @@ export default function(props: ItemProps) {
     span.innerText = content;
     span.style.visibility = 'hidden';
     document.body.appendChild(span);
-    content = render(option, {parentWidth: parentWidth - textLeftWidth - paddingLeft - 10, width: span.offsetWidth});
+    content = render(option, {
+      parentWidth: parentWidth - textLeftWidth - paddingLeft - 10,
+      width: span.offsetWidth
+    });
     document.body.removeChild(span);
   }
   const contentProps: any = {};

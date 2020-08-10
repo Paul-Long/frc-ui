@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Button, {ButtonProps} from 'antd/es/button';
 
 interface Props extends ButtonProps {
-  selected?: boolean
+  selected?: boolean;
 }
 
 class SWCButton extends React.Component<Props> {
@@ -12,9 +12,7 @@ class SWCButton extends React.Component<Props> {
     const cls: string = classNames('swc-btn', className, {
       ['swc-btn-selected']: !!selected
     });
-    return (
-      <Button className={cls} {...other} />
-    )
+    return <Button className={cls} {...other} />;
   }
 }
 

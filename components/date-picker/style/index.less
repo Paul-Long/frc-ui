@@ -1,20 +1,22 @@
-@calendar : ant-calendar;
+@calendar: ant-calendar;
 .swc-calendar-picker-container {
   padding-top: 27px;
   .ant-calendar-input-wrap {
     display: none !important;
   }
   .@{calendar} {
-    background-color: #193D37;
+    background-color: #193d37;
+    border: 1px solid #136c5e;
     &-range-middle {
       display: none;
     }
-    &-panel,&-range {
-      border: 1px solid #136C5E;
+    &-panel,
+    &-range {
+      border: 1px solid #136c5e;
     }
     &-in-range-cell {
       &:before {
-        background: #136C5E;
+        background: #136c5e;
       }
     }
     &-date-panel {
@@ -22,20 +24,20 @@
     &-header {
       height: 30px;
       line-height: 30px;
-      border-bottom: 1px solid #136C5E;
+      border-bottom: 1px solid #136c5e;
     }
     &-today {
       & > .@{calendar}-date {
-        color: #0A0F0E;
-        background: #FF9300;
-        border-color: #FF9300;
+        color: #0a0f0e;
+        background: #ff9300;
+        border-color: #ff9300;
       }
     }
     &-selected-day {
       & > .ant-calendar-date {
-        color: #FF9300;
+        color: #ff9300;
         background: transparent;
-        border-color: #FF9300;
+        border-color: #ff9300;
       }
     }
     &-year-select,
@@ -54,38 +56,38 @@
     }
     &-year-panel {
       top: 0;
-      background-color: #193D37;
+      background-color: #193d37;
       &-header {
         height: 30px;
         line-height: 30px;
-        border-bottom: 1px solid #136C5E;
+        border-bottom: 1px solid #136c5e;
       }
     }
     &-year-panel-year:hover {
-      background: #136C5E;
+      background: #136c5e;
     }
     &-year-panel-selected-cell {
       & > .ant-calendar-year-panel-year {
-        color: #0A0F0E;
-        background: #FF9300;
+        color: #0a0f0e;
+        background: #ff9300;
       }
     }
     &-month-panel {
       top: 0;
-      background-color: #193D37;
+      background-color: #193d37;
       &-header {
         height: 30px;
         line-height: 30px;
-        border-bottom: 1px solid #136C5E;
+        border-bottom: 1px solid #136c5e;
       }
     }
     &-month-panel-month:hover {
-      background: #136C5E;
+      background: #136c5e;
     }
     &-month-panel-selected-cell {
       & > .ant-calendar-month-panel-month {
-        color: #0A0F0E;
-        background: #FF9300;
+        color: #0a0f0e;
+        background: #ff9300;
       }
     }
     &-month-panel-cell-disabled {
@@ -95,9 +97,9 @@
       }
     }
     &-picker-clear {
-      color: #68420F;
+      color: #68420f;
       &:hover {
-        color: #A35000;
+        color: #a35000;
       }
     }
   }

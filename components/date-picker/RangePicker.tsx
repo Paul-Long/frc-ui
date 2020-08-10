@@ -10,9 +10,7 @@ class SWCRangePicker extends React.Component<RangePickerProps> {
     const {className, dropdownClassName, ...other} = this.props;
     const cls = classNames('swc-range-picker', className);
     const dcn = classNames('swc-calendar-picker-container', dropdownClassName);
-    return (
-      <RangePicker className={cls} dropdownClassName={dcn} {...other} />
-    );
+    return <RangePicker className={cls} dropdownClassName={dcn} {...other} />;
   }
 }
 

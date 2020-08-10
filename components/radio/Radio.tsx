@@ -10,10 +10,10 @@ class SWCRadio extends React.PureComponent<RadioProps> {
   static Button: typeof RadioButton;
   render() {
     const {className, ...other} = this.props;
-    const prop: RadioProps ={
+    const prop: RadioProps = {
       className: classNames(className, 'swc-radio')
     };
-    return (<Radio {...other} {...prop} />)
+    return <Radio {...other} {...prop} />;
   }
 }
 

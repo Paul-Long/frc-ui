@@ -3,13 +3,13 @@ import classNames from 'classnames';
 import Icon from '../components/icon';
 
 interface Props {
-  checked: boolean,
-  style?: CSSProperties,
-  className?: string,
-  prefix?: string,
-  disabled?: boolean,
-  onChange?: Function,
-  children?: any
+  checked: boolean;
+  style?: CSSProperties;
+  className?: string;
+  prefix?: string;
+  disabled?: boolean;
+  onChange?: Function;
+  children?: any;
 }
 const defaultProps = {
   checked: false,
@@ -18,27 +18,24 @@ const defaultProps = {
   prefix: 'swc-checkbox'
 };
 type DefaultProps = Partial<typeof defaultProps>;
-export default function (props: Props & DefaultProps) {
-  const {prefix, checked, className, disabled, onChange, style, children} = props;
+export default function(props: Props & DefaultProps) {
+  const {prefix: pre, checked, className, disabled, onChange, style, children} = props;
+  const prefix = pre || 'swc-checkbox';
   const cls = classNames('swc-checkbox', className, {
     checked: checked,
     [`${prefix}-child`]: !!children,
     [`${prefix}-disabled`]: disabled
   });
-  function click(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    event.stopPropagation();
+  function click(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    event.stopPropagation && event.stopPropagation();
     if (typeof onChange === 'function') {
       onChange(!checked);
     }
   }
   let child = null;
-  if (checked) child = (<Icon type='checkbox' />);
+  if (checked) child = <Icon type='checkbox' />;
   return (
-    <div
-      className={cls}
-      onClick={click}
-      style={style}
-    >
+    <div className={cls} onClick={click} style={style}>
       <span className='swc-checkbox-inner'>{child}</span>
       {children}
     </div>

@@ -12,10 +12,10 @@ const Path = {
     'M810.666667 554.666667H213.333333a42.666667 42.666667 0 0 1 0-85.333334h597.333334a42.666667 42.666667 0 0 1 0 85.333334z'
 };
 interface Props {
-  type: string,
-  style?:object,
-  className?: string,
-  onClick?: Function
+  type: string;
+  style?: object;
+  className?: string;
+  onClick?: Function;
 }
 
 export default function Icon(props: Props) {

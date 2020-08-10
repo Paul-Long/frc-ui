@@ -10,9 +10,7 @@ class SWCDatePicker extends React.Component<DatePickerProps> {
     const {className, dropdownClassName, ...other} = this.props;
     const cls = classNames('swc-calendar-picker', className);
     const dcn = classNames('swc-calendar-picker-container', dropdownClassName);
-    return (
-      <DatePicker className={cls} dropdownClassName={dcn} {...other} />
-    );
+    return <DatePicker className={cls} dropdownClassName={dcn} {...other} />;
   }
 }
 export default SWCDatePicker;

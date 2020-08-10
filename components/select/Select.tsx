@@ -34,7 +34,9 @@ class SWCSelect<T = SelectValue> extends React.Component<SelectProps, {}> {
       other.showArrow = false;
       other.allowClear = true;
     }
-    return (<Select ref={this.saveSelect} className={cls} showSearch={!!showSearch} dropdownClassName={dropCls} {...other} />);
+    return (
+      <Select ref={this.saveSelect} className={cls} showSearch={!!showSearch} dropdownClassName={dropCls} {...other} />
+    );
   }
 }
 
