@@ -16,14 +16,15 @@ class Content extends React.PureComponent<ContentProps, ContentState> {
 
   socketMessage: any;
 
+  auto: boolean = true;
+
   startDate: string = moment()
     .subtract(15, 'd')
     .format('YYYY-MM-DD');
   constructor(props: ContentProps) {
     super(props);
     this.state = {
-      chatMessage: [],
-      auto: true
+      chatMessage: []
     };
     if (props.historyStateDate) {
       this.startDate = props.historyStateDate;
@@ -68,8 +69,7 @@ class Content extends React.PureComponent<ContentProps, ContentState> {
   }
 
   componentDidUpdate() {
-    const {auto} = this.state;
-    if (auto && this.body) this.body.scrollTop = this.body.scrollHeight;
+    if (this.auto && this.body) this.body.scrollTop = this.body.scrollHeight;
   }
 
   load = () => {
@@ -93,7 +93,7 @@ class Content extends React.PureComponent<ContentProps, ContentState> {
     const top = this.body.scrollTop + this.body.clientHeight;
     const auto = top > this.body.scrollHeight - 5 && top < this.body.scrollHeight + 5;
     if (auto) this.socketMessage = null;
-    this.setState({auto});
+    this.auto = auto;
   };
 
   saveRef = (name: string) => (ele: any) => {
@@ -109,7 +109,7 @@ class Content extends React.PureComponent<ContentProps, ContentState> {
 
   render() {
     const {prefix, historyMessage, locale} = this.props;
-    const {chatMessage, auto} = this.state;
+    const {chatMessage} = this.state;
     const cls = `${prefix}-content`;
     return (
       <div className={cls}>
@@ -123,7 +123,7 @@ class Content extends React.PureComponent<ContentProps, ContentState> {
           />
           {this.renderBody()}
         </div>
-        <MessageTip prefix={cls} message={this.socketMessage} show={!auto} onClick={this.scroll} locale={locale} />
+        <MessageTip prefix={cls} message={this.socketMessage} show={!this.auto} onClick={this.scroll} locale={locale} />
       </div>
     );
   }

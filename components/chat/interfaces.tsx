@@ -117,7 +117,8 @@ export interface AnonState {
 export interface EmojiProps extends BaseProps {
   className?: string;
   uploadEmo?: any,
-  cEmoji?: any
+  cEmoji?: any,
+  removeEmoji?: any
 }
 
 export interface EmojiState {
@@ -134,7 +135,6 @@ export interface ContentProps extends BaseProps {
 
 export interface ContentState {
   chatMessage: Array<any>;
-  auto: boolean;
 }
 
 export interface HeaderProps extends BaseProps {

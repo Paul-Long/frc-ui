@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import uuid from 'uuid';
+import {v1} from 'uuid';
 import {Consumer} from '../common/Hoc';
 import Inset from '../common/ChatInsetContent';
 import {
@@ -86,7 +86,7 @@ class Send extends React.PureComponent<SendProps, SendState> {
       const node = childNodes[i];
       if (node.nodeName === '#text') {
         message = this.analysisText(node['textContent'], message);
-      } else if (node['eleType']) {
+      } else {
         message.push({type: node['eleType'], content: node['content']});
       }
     }
@@ -119,12 +119,28 @@ class Send extends React.PureComponent<SendProps, SendState> {
 
   send = (message: Array<MessageItemType> = []) => {
     if (!message || message.length === 0) return;
-    const {Socket, user, permission, channel, isAnonymous, fontSize, anonymousName, locale, trendType} = this.props;
+    const {
+      Socket,
+      user,
+      permission,
+      channel,
+      isAnonymous,
+      fontSize,
+      anonymousName,
+      locale,
+      trendType,
+      isGag
+    } = this.props;
+    const {often} = this.state;
+    const has = (permission || []).some((p) => p === PermissionEnum.CHAT_ROOM);
+    if (isGag || often || !has) {
+      return;
+    }
     const per = permission || [];
     const fontSizePermission = per.some((p) => p === PermissionEnum.DANMAKU_FONT);
     const colorPermission = per.some((p) => p === PermissionEnum.DANMAKU_COLOR);
     const chatMessage = {
-      id: uuid.v1(),
+      id: v1(),
       username: user && user.username,
       isAnonymous,
       channel,
@@ -159,6 +175,12 @@ class Send extends React.PureComponent<SendProps, SendState> {
   };
 
   insetContent = (type: string, content: any) => {
+    const {isGag, permission} = this.props;
+    const {often} = this.state;
+    const has = (permission || []).some((p) => p === PermissionEnum.CHAT_ROOM);
+    if (isGag || often || !has) {
+      return;
+    }
     if (!this.chatMessage) return;
     this.currentType = type;
     Inset({type, content}, this.chatMessage);
@@ -233,7 +255,7 @@ class Send extends React.PureComponent<SendProps, SendState> {
     const shortcutKey = getLocalStorageItem(LocalStorageKey.shortcutKey, 'EnterSend');
     if ((event.ctrlKey || event.metaKey) && event.keyCode === 13) {
       if (shortcutKey === 'EnterSend') {
-        this.handleAddBlank();
+        this.handleAddBlank(event);
       } else if (shortcutKey === 'CtrlEnterSend') {
         this.handleSend();
       }
@@ -241,7 +263,7 @@ class Send extends React.PureComponent<SendProps, SendState> {
       if (shortcutKey === 'EnterSend') {
         this.handleSend();
       } else if (shortcutKey === 'CtrlEnterSend') {
-        this.handleAddBlank();
+        this.handleAddBlank(event);
       }
     } else {
       this.currentType = MessageType.TEXT;
@@ -267,18 +289,22 @@ class Send extends React.PureComponent<SendProps, SendState> {
     for (let i = 0; i < childNodes.length; i++) {
       const node = childNodes[i];
       if (!node) continue;
-      if (node.nodeName === '#text' && node.textContent) {
-        let tempLength = length + node.textContent.length;
+      if (node.nodeName === '#text') {
+        let tempLength = length + (node.textContent ? node.textContent.length : 0);
         if (textMaxLength && tempLength > textMaxLength) {
-          node.textContent = node.textContent.substring(0, textMaxLength - length);
+          node.textContent = node.textContent
+            ? node.textContent.substring(0, textMaxLength - length)
+            : node.textContent;
           length = textMaxLength;
         } else {
           length = tempLength;
         }
-      } else if (node['eleType'] === MessageType.TEXT && node.textContent) {
-        let tempLength = length + node.textContent.length;
+      } else if (node['eleType'] === MessageType.TEXT) {
+        let tempLength = length + (node.textContent ? node.textContent.length : 0);
         if (textMaxLength && tempLength > textMaxLength) {
-          node.textContent = node.textContent.substring(0, textMaxLength - length);
+          node.textContent = node.textContent
+            ? node.textContent.substring(0, textMaxLength - length)
+            : node.textContent;
           node['content'] = node.textContent;
           length = textMaxLength;
         } else {
@@ -292,7 +318,8 @@ class Send extends React.PureComponent<SendProps, SendState> {
     this.setState({textLength: length});
   };
 
-  handleAddBlank = () => {
+  handleAddBlank = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    event && event.preventDefault();
     if (this.currentType === MessageType.TEXT || !this.currentType) {
       this.insetContent(MessageType.ELEMENT, 'br');
     }
@@ -396,14 +423,15 @@ class Send extends React.PureComponent<SendProps, SendState> {
   };
 
   render() {
-    const {prefix, className, permission} = this.props;
+    const {prefix, className, permission, isGag} = this.props;
+    const {often} = this.state;
     const has = (permission || []).some((p) => p === PermissionEnum.CHAT_ROOM);
     const cls = classNames(`${prefix}-send`, className);
     return (
       <div className={cls}>
         {this.renderInput(has)}
         <div className={`${prefix}-send-bottom`}>
-          {this.renderTip(has)} <Button onClick={this.handleSend} />
+          {this.renderTip(has)} {has && !isGag && !often && <Button onClick={this.handleSend} />}
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import hoistStatics from 'hoist-non-react-statics';
-import {ChatProps, ConsumerProps, FsType, MessageType, TrendType} from '../interfaces';
+import {ChatProps, ConsumerProps, FsType, TrendType} from '../interfaces';
 import zh_CN from '../locale/zh_CN';
 
 const {createContext} = React;
@@ -13,6 +13,13 @@ export function Provider<T extends object>(Component: React.ComponentType<T>): a
       emit: () => {},
       track: () => {}
     };
+
+    constructor(props: T & ChatProps) {
+      super(props);
+      const {emit, channel} = props;
+      emit && emit('chat', {channel});
+    }
+
     render() {
       const {
         user,
@@ -102,8 +109,9 @@ export const Consumer = (keys: Array<string> = []) => <T extends object>(Compone
           }
           return null;
         },
-        uploadEmo: (state: any) => state.chatFile[MessageType.EMO],
-        cEmoji: (state: any) => state.emoji.list
+        uploadEmo: (state: any) => state.chatFile[FsType.EMO],
+        cEmoji: (state: any) => state.emoji.list,
+        removeEmoji: (state: any) => state.emoji.remove
       };
     };
 

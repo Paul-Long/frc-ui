@@ -12,6 +12,13 @@ class Anon extends React.PureComponent<AnonProps, AnonState> {
     isAnonymous: getLocalStorageItem(LocalStorageKey.isAnonymous, 'false') === 'true'
   };
 
+  constructor(props: AnonProps) {
+    super(props);
+    const {permission} = props;
+    this.anon = (permission || []).some((p) => p === ChatPermissionEnum.ANONYMOUS_PERM);
+  }
+
+
   componentDidMount() {
     const {emit, isAnonymous, channel, permission} = this.props;
 
@@ -52,6 +59,7 @@ class Anon extends React.PureComponent<AnonProps, AnonState> {
       disabled: !this.anon,
       onChange: this.handleClick
     };
+    console.log(props);
     return (
       <Checkbox checked={!!isAnonymous} {...props}>
         {locale && locale.anon}

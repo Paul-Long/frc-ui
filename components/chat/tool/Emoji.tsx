@@ -4,9 +4,9 @@ import message from '../../message';
 import EmojiOne, {EmojiType, UploadType} from '../../emoji-one';
 import {Consumer} from '../common/Hoc';
 import {EmojiProps, EmojiState, FsType} from '../interfaces';
-import uuid from 'uuid';
+import {v1} from 'uuid';
 
-@Consumer(['uploadEmo', 'cEmoji'])
+@Consumer(['uploadEmo', 'cEmoji', 'removeEmoji'])
 class Emoji extends React.PureComponent<EmojiProps, EmojiState> {
   constructor(props: EmojiProps) {
     super(props);
@@ -25,14 +25,7 @@ class Emoji extends React.PureComponent<EmojiProps, EmojiState> {
   uploadFiles: object = {};
 
   componentDidMount() {
-    const {emit, channel} = this.props;
-    if (emit) {
-      emit('emoji.list', {
-        current: 0,
-        size: 30,
-        code: channel
-      });
-    }
+    this.load();
   }
 
   componentWillReceiveProps(nextProps: EmojiProps) {
@@ -52,9 +45,24 @@ class Emoji extends React.PureComponent<EmojiProps, EmojiState> {
     }
     if (nextProps.cEmoji !== this.props.cEmoji && nextProps.cEmoji.result) {
       emoji = (nextProps.cEmoji.result || {}).content || [];
+      change = true;
+    }
+    if (nextProps.removeEmoji !== this.props.removeEmoji && nextProps.removeEmoji.success) {
+      this.load();
     }
     if (change) this.setState({collectEmoji: emoji});
   }
+
+  load = () => {
+    const {emit, channel} = this.props;
+    if (emit) {
+      emit('emoji.list', {
+        current: 0,
+        size: 30,
+        code: channel
+      });
+    }
+  };
 
   collectEmoji = (uploadEmo: any) => {
     this.uploadFiles[uploadEmo.payload.fileName] = uploadEmo.url;
@@ -62,7 +70,7 @@ class Emoji extends React.PureComponent<EmojiProps, EmojiState> {
     let uploadUrls: any = [];
     Object.keys(this.uploadFiles).forEach((key) => {
       const value = this.uploadFiles[key];
-      if (value) {
+      if (!value) {
         success = false;
       } else {
         uploadUrls.push({emojiUrl: value});
@@ -90,7 +98,7 @@ class Emoji extends React.PureComponent<EmojiProps, EmojiState> {
     }
     let filesData = Array.from(data.files || []).map((file) => {
       const formData = new FormData();
-      let fileName = uuid.v1();
+      let fileName = v1();
       formData.append('file', file, fileName);
       this.uploadFiles[fileName] = undefined;
       return {
@@ -128,7 +136,7 @@ class Emoji extends React.PureComponent<EmojiProps, EmojiState> {
       this.deleteEmoji = emo.emo;
       emit && emit('emoji.remove', {url: emo.emo, code: channel});
     } else {
-      emit && emit('chat', {emo, id: uuid.v1()});
+      emit && emit('chat', {emo, id: v1()});
     }
   };
 
