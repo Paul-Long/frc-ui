@@ -56,7 +56,7 @@ class Chat extends React.Component<ChatProps> {
   getStyle = () => {};
 
   render() {
-    const {className, useSend, useHeader, useMessage, tools, sendSize, prefix} = this.props;
+    const {className, useSend, useHeader, useMessage, tools, sendSize, prefix, setName} = this.props;
 
     let useTool: boolean = false;
 
@@ -83,7 +83,7 @@ class Chat extends React.Component<ChatProps> {
         {useTool && useSend && (
           <div className={`${prefix}-bottom`} style={{height: bottom + 10}}>
             {useTool && <Tool />}
-            {useSend && <Send className={sendSize === 'small' ? `${prefix}-send-sm` : ''} />}
+            {useSend && <Send setName={setName} className={sendSize === 'small' ? `${prefix}-send-sm` : ''} />}
           </div>
         )}
       </div>

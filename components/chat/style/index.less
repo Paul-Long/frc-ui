@@ -247,10 +247,29 @@
     &-content {
       line-height: 1.5;
       min-height: 1.75em;
-      overflow: auto;
-      overflow-x: hidden;
+      overflow: hidden;
       word-wrap: break-word;
       word-break: break-all;
+      .collect-emoji-warp {
+        position: relative;
+        overflow: hidden;
+        max-width: 155px;
+        max-height: 155px;
+        &:hover {
+          cursor: pointer;
+        }
+        .collect-emoji-div {
+          position: absolute;
+          opacity: 0.5;
+          background-color: #0f0f10;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .collect-emoji-icon {
+            font-size: 43px;
+          }
+        }
+      }
       img {
         max-width: 280px;
         max-height: 64px;

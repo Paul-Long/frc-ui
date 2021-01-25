@@ -103,7 +103,7 @@ const gif = (data: any, content: any, callback: any) => {
   let div = document.createElement('div');
   let i = document.createElement('i');
   div.className = classNames(['collect-emoji-div']);
-  i.className = classNames(['collect-emoji-icon icon-font icon-star']);
+  i.className = classNames(['collect-emoji-icon sumscope-icon icon-star-o']);
   div.appendChild(i);
   div.onclick = function() {
     callback(data.content);

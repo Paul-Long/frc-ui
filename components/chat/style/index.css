@@ -234,10 +234,29 @@
 .frc-chat-message-content {
   line-height: 1.5;
   min-height: 1.75em;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   word-wrap: break-word;
   word-break: break-all;
+}
+.frc-chat-message-content .collect-emoji-warp {
+  position: relative;
+  overflow: hidden;
+  max-width: 155px;
+  max-height: 155px;
+}
+.frc-chat-message-content .collect-emoji-warp:hover {
+  cursor: pointer;
+}
+.frc-chat-message-content .collect-emoji-warp .collect-emoji-div {
+  position: absolute;
+  opacity: 0.5;
+  background-color: #0f0f10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.frc-chat-message-content .collect-emoji-warp .collect-emoji-div .collect-emoji-icon {
+  font-size: 43px;
 }
 .frc-chat-message-content img {
   max-width: 280px;

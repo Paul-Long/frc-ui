@@ -14,6 +14,7 @@ export interface BaseProps {
   messageTypes?: Array<string>;
   showAllHistory?: boolean;
   historyStateDate?: string;
+  setName?:Function;
 }
 export type UserType = {
   userId: string;
@@ -82,7 +83,7 @@ export interface SendProps extends BaseProps {
   trendType?: string;
   history?: boolean;
   emo?: any;
-  uploadImage?: any
+  uploadImage?: any;
 }
 
 export interface SendState {

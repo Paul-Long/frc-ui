@@ -29,7 +29,7 @@ class LoadMore extends React.PureComponent<LoadMoreProps> {
     let child: any = locale && locale.loadMore;
     if (loading) {
       child = <Loading size={20} />;
-    } else if (total <= start + pageSize) {
+    } else if (total <= start) {
       child = locale && locale.noLoadMore;
     }
     const className = classNames(`${prefix}-load-more`, {

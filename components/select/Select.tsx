@@ -4,7 +4,10 @@ import Select, {SelectProps, SelectValue} from 'antd/es/select';
 import Icon from '../icon';
 import {OptGroup as G, Option as Opt} from 'rc-select';
 
-class SWCSelect<T = SelectValue> extends React.Component<SelectProps, {}> {
+interface SelectP {
+  onClear?: Function;
+}
+class SWCSelect<T = SelectValue> extends React.Component<SelectProps & SelectP, {}> {
   static Option: typeof Opt;
 
   static OptGroup: typeof G;
@@ -26,11 +29,11 @@ class SWCSelect<T = SelectValue> extends React.Component<SelectProps, {}> {
   }
 
   render() {
-    const {className, showSearch, dropdownClassName, ...other} = this.props;
+    const {className, showSearch, dropdownClassName, onClear, ...other} = this.props;
     const cls = classNames('swc-select', className);
     const dropCls = classNames('swc-select-dropdown', dropdownClassName);
     if (showSearch) {
-      other.clearIcon = <Icon className='swc-select-clear' type='close-square' />;
+      other.clearIcon = <Icon className='swc-select-clear' type='close-square' onClick={onClear} />;
       other.showArrow = false;
       other.allowClear = true;
     }

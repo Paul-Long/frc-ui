@@ -96,13 +96,13 @@ class Socket {
   emit = (event: any, arg: any) => {
     this._callbacks = this._callbacks || {};
     // @ts-ignore
-    var args = [].slice.call(arguments, 1),
-      callbacks = this._callbacks['$' + event];
+    let callbacks = this._callbacks['$' + event];
 
     if (callbacks) {
       callbacks = callbacks.slice(0);
-      for (var i = 0, len = callbacks.length; i < len; ++i) {
-        callbacks[i].apply(this, args);
+      for (let i = 0, len = callbacks.length; i < len; ++i) {
+        if (typeof callbacks[i] === 'function')
+          callbacks[i](arg);
       }
     }
 

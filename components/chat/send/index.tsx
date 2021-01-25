@@ -129,7 +129,8 @@ class Send extends React.PureComponent<SendProps, SendState> {
       anonymousName,
       locale,
       trendType,
-      isGag
+      isGag,
+      setName
     } = this.props;
     const {often} = this.state;
     const has = (permission || []).some((p) => p === PermissionEnum.CHAT_ROOM);
@@ -154,7 +155,11 @@ class Send extends React.PureComponent<SendProps, SendState> {
       }
     };
     if (anonymousName && isAnonymous) {
-      chatMessage.showName = ((locale && locale.trendType[trendType || TrendType.NONE]) || '') + anonymousName;
+      if (typeof setName === 'function') {
+        chatMessage.showName = setName({...user, trendType, isAnonymous, anonymousName});
+      } else {
+        chatMessage.showName = ((locale && locale.trendType[trendType || TrendType.NONE]) || '') + anonymousName;
+      }
     }
     if (Socket) Socket.send('chat', chatMessage);
   };

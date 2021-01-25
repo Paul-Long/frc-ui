@@ -5,6 +5,7 @@ interface IconProps {
   type: string;
   className?: string;
   style?: React.CSSProperties;
+  onClick?: any;
 }
 export default function(props: IconProps) {
   const {type, className, ...other} = props;

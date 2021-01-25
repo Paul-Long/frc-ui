@@ -289,7 +289,7 @@ class Tree extends React.PureComponent<Props, State> {
     return options.map((o) => {
       return (
         <Item
-          key={`${o.value}-${o.index}`}
+          key={`${o.value}-${Math.random()}`}
           prefix={prefix}
           option={o}
           clickRow={clickRow}
