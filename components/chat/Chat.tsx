@@ -28,7 +28,9 @@ class Chat extends React.Component<ChatProps> {
       emit('chatGag.isGag', {userId: user && user.userId, chatRoomCode: channel});
       emit('chatMessage.clientCount', channel);
       emit('chatDict', ['textMaxLength', 'SysNotice']);
-      Socket.join(channel);
+      this.sub();
+      Socket.on('connect', this.sub);
+      Socket.on('reconnect', this.sub);
       Socket.on(`chatroom_userpermission_${channel}`, function(permission: object) {
         success && success('chatPermission', {result: permission});
       });
@@ -39,14 +41,19 @@ class Chat extends React.Component<ChatProps> {
         success && success('chatDict', {result: dict});
       });
       Socket.on('patr_permission_msg', function() {
-        emit('pc.hasAuth');
+        emit && emit('pc.hasAuth');
       });
       Socket.on('patr_apply_permission_msg', function() {
-        emit('pc.applyAuth');
+        emit && emit('pc.applyAuth');
       });
     }
     window.addEventListener('beforeunload', this.leave);
   }
+
+  sub = () => {
+    const {channel, Socket} = this.props;
+    Socket.join(channel);
+  };
 
   leave = () => {
     const {channel, Socket} = this.props;
