@@ -89,3 +89,16 @@
 .swc-calendar-picker-container .ant-calendar-picker-clear:hover {
   color: #a35000;
 }
+.swc-calendar-picker-container .ant-calendar-time-picker {
+  top: 31px !important;
+}
+.swc-calendar-picker-container .ant-calendar-time-picker-input-wrap {
+  display: block;
+}
+.swc-calendar-picker-container .ant-calendar-time-picker-select-option-selected {
+  background: #ff9300;
+  color: #0a0f0e;
+}
+.swc-calendar-picker-container .ant-calendar-time-picker-combobox {
+  height: 198px !important;
+}

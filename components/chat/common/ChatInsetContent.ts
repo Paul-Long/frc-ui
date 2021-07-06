@@ -10,7 +10,13 @@ const underName = {
 export default (data: any, content: any, callback?: any) => {
   let node: any = null;
   if (data.type === Type.TEXT) {
-    node = document.createTextNode(data.content);
+    if (data.style) {
+      node = document.createElement('span');
+      node.innerHTML = data.content;
+      node.style = data.style;
+    } else {
+      node = document.createTextNode(data.content);
+    }
     node.eleType = data.type;
   } else if (data.type === Type.EMO) {
     node = document.createElement('img');

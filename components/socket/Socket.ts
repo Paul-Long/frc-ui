@@ -9,12 +9,11 @@ const __socket: any = (function instanceInit() {
 })();
 
 interface OptionProps {
-  host: string,
-  path: string,
-  userId: string,
-  token: string
+  host: string;
+  path: string;
+  userId: string;
+  token: string;
 }
-
 
 class Socket {
   worker: any = null;
@@ -25,6 +24,7 @@ class Socket {
     if (instance) {
       return instance;
     }
+    this.off.bind(this);
     window.addEventListener('beforeunload', this.leave);
     __socket(this);
   }
@@ -93,6 +93,33 @@ class Socket {
     return this;
   };
 
+  off = (event: any, fn: any) => {
+    this._callbacks = this._callbacks || {};
+
+    if (!event && !fn) {
+      this._callbacks = {};
+      return this;
+    }
+
+    let callbacks = this._callbacks['$' + event];
+    if (!callbacks) return this;
+
+    if (!!event && !fn) {
+      delete this._callbacks['$' + event];
+      return this;
+    }
+
+    let cb;
+    for (var i = 0; i < callbacks.length; i++) {
+      cb = callbacks[i];
+      if (cb === fn || cb.fn === fn) {
+        callbacks.splice(i, 1);
+        break;
+      }
+    }
+    return this;
+  };
+
   emit = (event: any, arg: any) => {
     this._callbacks = this._callbacks || {};
     // @ts-ignore
@@ -101,8 +128,7 @@ class Socket {
     if (callbacks) {
       callbacks = callbacks.slice(0);
       for (let i = 0, len = callbacks.length; i < len; ++i) {
-        if (typeof callbacks[i] === 'function')
-          callbacks[i](arg);
+        if (typeof callbacks[i] === 'function') callbacks[i](arg);
       }
     }
 

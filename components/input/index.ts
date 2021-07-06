@@ -5,4 +5,4 @@ import Search from './Search';
 SInput.Search = Search;
 SInput.TextArea = Input.TextArea;
 
-export default Input;
+export default SInput;

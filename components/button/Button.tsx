@@ -10,7 +10,8 @@ class SWCButton extends React.Component<Props> {
   render() {
     const {className, selected, ...other} = this.props;
     const cls: string = classNames('swc-btn', className, {
-      ['swc-btn-selected']: !!selected
+      ['swc-btn-selected']: !!selected,
+      [`swc-btn-${other.type}`]: !!other.type
     });
     return <Button className={cls} {...other} />;
   }
